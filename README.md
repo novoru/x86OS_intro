@@ -1,5 +1,5 @@
 # x86OS_intro
-This is a sample operating system run on the X86 architecture.
+This is a sample operating system run on the x86 architecture.
 # BUILD
 ```sh
 $ dev
