@@ -54,13 +54,14 @@ KBC_Data_Read:
         ; レジスタの保存
         ;------------------------------------------
         push    cx
+        push    di
 
         mov     cx, 0                               ; CX = 0;   // 最大カウント数
 .10L:                                               ; do
                                                     ; {
         in      al, 0x64                            ; AL = inp(0x64);   // KBCステータス
         test    al, 0x01                            ; ZF = AL & 0x01;   // 読み込み可能?
-        loopnz  .10L                                ; } while(--CX && !ZF);
+        loopz   .10L                                ; } while(--CX && !ZF);
 
         cmp     cx, 0                               ; if(CX)    // 未タイムアウト
         jz      .20E                                ; {
@@ -69,7 +70,7 @@ KBC_Data_Read:
         in      al, 0x60                            ;   AL = inp(0x60); // データ取得
 
         mov     di, [bp + 4]                        ;   DI = ptr;
-        mov     [bp + 0], ax                        ;   DI[0] = AX;
+        mov     [di + 0], ax                        ;   DI[0] = AX;
 .20E:                                               ; }
 
         mov     ax, cx                              ; return CX;
@@ -77,6 +78,7 @@ KBC_Data_Read:
         ;------------------------------------------
         ; レジスタの復帰
         ;------------------------------------------
+        pop     di
         pop     cx
 
         ;------------------------------------------
