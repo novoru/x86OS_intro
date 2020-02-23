@@ -37,7 +37,11 @@ draw_str:
         ;---------------------------------
         ; 1文字表示
         ;---------------------------------
+%ifdef  USE_SYSTEM_CALL
+        int     0x81
+%else
         cdecl   draw_char, ecx, edx, ebx, eax   ;   draw_char();
+%endif
 
         ; 次の文字の位置を調整
         inc     ecx                         ;   ECX++;

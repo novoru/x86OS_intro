@@ -14,12 +14,16 @@
 
 %endmacro
 
-%macro  set_vect 1-*
+%macro  set_vect 1-*.nolist
         push    eax
         push    edi
 
         mov     edi, VECT_BASE + (%1 * 8)
         mov     eax, %2
+
+    %if 3 == %0
+        mov     [edi + 4], %3
+    %endif
 
         mov     [edi + 0], ax
         shr     eax, 16
