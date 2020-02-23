@@ -65,10 +65,10 @@ draw_char:
     cdecl   vga_set_write_plane, 0x01		; // 読み込みプレーン：青(B)
     cdecl   vram_font_copy, esi, edi, 0x01, ebx
 
-%ifdef	USE_TEST_AND_SET
     ;---------------------------------------
     ; テストアンドセット
     ;---------------------------------------
+%ifdef	USE_TEST_AND_SET
     mov		[IN_USE], dword 0				; 変数のクリア
 %endif
 
